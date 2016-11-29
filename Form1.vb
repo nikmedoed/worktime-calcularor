@@ -60,20 +60,81 @@ Public Class Form1
         Public Sub add(st As Date, en As Date)
             Dim D(2) As Date
             D = {st, en}
-            Dim a, b As Integer
 
             If wtime.Count = 0 Then
                 wtime.Add(D)
             Else
+                If en < wtime.First()(0) Then
+                    wtime.Insert(0, D)
+                ElseIf st > wtime.Last()(1) Then
+                    wtime.Add(D)
+                ElseIf en > wtime.Last()(1) And st < wtime.First()(0) Then
+                    wtime.Clear()
+                    wtime.Add(D)
+                Else
+                    For i = 1 To wtime.Count - 1
+                        If wtime(i)(0) <= st Then ' нашли стартовую точку между стартовыми точками двух промежутков
+                            For j = i To wtime.Count - 1
+                                If wtime(j)(1) >= en Then ' нашли конечную точку между конечными точками двух промежутков
+                                    If i = j Then '---- промежуток полностью поглощён 
+                                        GoTo OK
+                                    Else
+                                        If wtime(i)(1) >= st Then ' стартовая точка лежит внутри
+                                            If wtime(j)(0) <= en Then ' конечная точка лежит внутри
+                                                wtime(i)(1) = wtime(j)(1)
+                                                wtime.RemoveRange(i + 1, j - i) '---- промежуток соединил несколько промежутков 
+                                                GoTo OK
+                                            Else ' конечная точка лежит снаружи
+                                                wtime(i)(1) = en
+                                                wtime.RemoveRange(i + 1, j - i - 1) '---- промежуток соединил несколько промежутков и перенес конец
+                                                GoTo OK
+                                            End If
+                                        Else ' стартовая точка лежит снаружи
 
-                If en < wtime(1)(1) Then
-                    'wtime.Insert()
+                                            If wtime(j)(0) <= en Then ' конечная точка лежит внутри
+                                                wtime(j)(0) = st
+                                                wtime.RemoveRange(i + 1, j - i - 1) '---- промежуток соединил несколько промежутков 
+                                                GoTo OK
+                                            Else ' конечная точка лежит снаружи
+                                                wtime.RemoveRange(i + 1, j - i - 1) '---- удалили покрытые промежутки и добавили новый
+                                                wtime.Insert(i, D)
+                                                GoTo OK
+                                            End If
+                                        End If
+                                    End If
+                                End If
+                            Next
+                            ' конечная точка за пределами
+                            If wtime(i)(1) >= st Then ' стартовая точка лежит внутри
+                                wtime(i)(1) = en
+                                wtime.RemoveRange(i + 1, wtime.Count - 1 - i) '---- промежуток соединил несколько промежутков 
+                                GoTo OK
+                            Else ' стартовая точка лежит снаружи
+                                wtime.RemoveRange(i + 1, wtime.Count - i - 1) '---- удалили покрытые промежутки и добавили новый
+                                wtime.Insert(i, D)
+                                GoTo OK
+                            End If
+                        End If
+                    Next
+                    ' стартовая точка лежит за пределами, но конец точно где-то внутри
+                    For i = 1 To wtime.Count - 1
+                        If wtime(i)(1) >= en Then
+                            If wtime(i)(0) <= en Then ' конечная точка лежит внутри
+                                wtime(i)(0) = st
+                                wtime.RemoveRange(0, i - 1) '---- промежуток соединил несколько промежутков 
+                                GoTo OK
+                            Else ' конечная точка лежит снаружи
+                                wtime.RemoveRange(0, i - 1) '---- удалили покрытые промежутки и добавили новый
+                                wtime.Insert(0, D)
+                                GoTo OK
+                            End If
+                        End If
+                    Next
+                    Debug.Print("Неожиданно" + Str(st) + "  " + Str(en))
                 End If
-
-                For i = 1 To wtime.Count - 1
-
-                Next
-                End If
+            End If
+            Debug.Print("Совсем неожиданно" + Str(st) + "  " + Str(en))
+OK:
         End Sub
     End Structure
 
