@@ -1,0 +1,14 @@
+E:\clouds\Dropbox\programming\worktime calcularor\worktime calcularor\bin\Debug\worktime calcularor.exe.config
+E:\clouds\Dropbox\programming\worktime calcularor\worktime calcularor\bin\Debug\worktime calcularor.exe
+E:\clouds\Dropbox\programming\worktime calcularor\worktime calcularor\bin\Debug\worktime calcularor.pdb
+E:\clouds\Dropbox\programming\worktime calcularor\worktime calcularor\bin\Debug\worktime calcularor.xml
+E:\clouds\Dropbox\programming\worktime calcularor\worktime calcularor\obj\Debug\worktime calcularor.vbprojResolveAssemblyReference.cache
+E:\clouds\Dropbox\programming\worktime calcularor\worktime calcularor\obj\Debug\worktime_calcularor.Form1.resources
+E:\clouds\Dropbox\programming\worktime calcularor\worktime calcularor\obj\Debug\worktime_calcularor.Resources.resources
+E:\clouds\Dropbox\programming\worktime calcularor\worktime calcularor\obj\Debug\worktime calcularor.vbproj.GenerateResource.Cache
+E:\clouds\Dropbox\programming\worktime calcularor\worktime calcularor\obj\Debug\worktime calcularor.exe
+E:\clouds\Dropbox\programming\worktime calcularor\worktime calcularor\obj\Debug\worktime calcularor.xml
+E:\clouds\Dropbox\programming\worktime calcularor\worktime calcularor\obj\Debug\worktime calcularor.pdb
+E:\clouds\Dropbox\programming\worktime calcularor\worktime calcularor\bin\Debug\Newtonsoft.Json.dll
+E:\clouds\Dropbox\programming\worktime calcularor\worktime calcularor\bin\Debug\Newtonsoft.Json.xml
+E:\clouds\Dropbox\programming\worktime calcularor\worktime calcularor\obj\Debug\worktime calcularor.vbproj.ResolveComReference.cache
