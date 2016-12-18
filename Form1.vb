@@ -60,6 +60,8 @@ Public Class Form1
         Public Sub add(st As Date, en As Date)
             Dim D(2) As Date
             D = {st, en}
+            If tst > st Then tst = st
+            If tend < en Then tend = en
 
             If wtime.Count = 0 Then
                 wtime.Add(D)
@@ -130,10 +132,9 @@ Public Class Form1
                             End If
                         End If
                     Next
-                    Debug.Print("Неожиданно" + Str(st) + "  " + Str(en))
+                    Debug.Print("Неожиданно " + st + "  " + en + " " + name)
                 End If
             End If
-            Debug.Print("Совсем неожиданно" + Str(st) + "  " + Str(en))
 OK:
         End Sub
     End Structure
@@ -142,20 +143,43 @@ OK:
         cI = StrToi(Letter_I.Text)
         cS = StrToi(Letter_S.Text)
         cE = StrToi(Letter_E.Text)
+        Dim de, ds As Date
 
-        Dim k As New List(Of Integer)
-        k.Add(1)
-        k.Add(2)
-        MsgBox(CStr(cI) + " " + CStr(cS) + " " + CStr(cE))
+        Debug.Print("Выбранные столбцы " + CStr(cI) + " " + CStr(cS) + " " + CStr(cE))
 
-        MsgBox(k(1))
+        Dim em As New List(Of Employe)
+        Dim t As New Employe
+        Dim el As Integer
+        ProgressBar1.Maximum = Sheet.UsedRange.Rows.Count - 1
+
+        de = Sheet.Cells(2, cE).Value
+        ds = Sheet.Cells(2, cS).Value
 
         For i = 2 To Sheet.UsedRange.Rows.Count
-            ' напиши структуру
-            ' собери в неёё инфу
+            ProgressBar1.Value = i - 1
+            t.name = Sheet.Cells(i, cI).Value
+            el = em.FindIndex(Function(U As Employe)
+                                  Return U.name = t.name
+                              End Function
+                              )
+
+            t.tst = Sheet.Cells(i, cS).Value
+            t.tend = Sheet.Cells(i, cE).Value
+            If ds > t.tst Then ds = t.tst
+            If de < t.tend Then de = t.tend
+
+            If el = -1 Then
+                ' создать
+                t.wtime = New List(Of Date())
+                em.Add(t)
+                em.Last().add(t.tst, t.tend)
+            Else
+                em(el).add(t.tst, t.tend)
+            End If
+
+            Debug.Print(ds + " " + de + " " + CStr(em.Count))
             ' сделай эталонное время работы
             ' вырезай из него
-            ' выделить для каждого края
             ' выделить общие края
         Next
     End Sub
